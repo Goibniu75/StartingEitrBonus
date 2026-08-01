@@ -20,7 +20,7 @@ BaseEitrBonus = 25
 Warning:
 This mod is a learning experience for me. I'm not good at programmer, so I used AI to help generate some parts of the code. As I learn more, I will slowly rebuild this mod by hand. 
 
-Question, Complains, pointers or interested in turning this into something more useful? Head over to this mod's discord or my github page.
+Question, Complains, pointers or interested in turning this into something more useful? Head over to this mod's discord page.
 [StartingEitrBonus](https://discord.gg/t3MQyhrCC)
 
 Revisions:
