@@ -1,0 +1,9 @@
+{
+  "name": "StartingEitrBonus",
+  "version_number": "1.0.0",
+  "website_url": "",
+  "description": "Adds a configurable base Eitr bonus so players can start with Eitr before eating magic food.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2202"
+  ]
+}
