@@ -20,7 +20,7 @@ Enabled = true
 BaseEitrBonus = 25
 ```
 
-Set `BaseEitrBonus` to any value from `0` to `500`.
+Set `BaseEitrBonus` to any value from `0` to `250`.
 
 ## Build
 
