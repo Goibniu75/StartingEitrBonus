@@ -24,6 +24,5 @@ Question, Complains, pointers or interested in turning this into something more 
 [StartingEitrBonus](https://discord.gg/t3MQyhrCC)
 
 Revisions:
-1.0.3 - Added revision info to Mod Profile. Changed name of config file.
 1.0.2 - Changed Max Eitr Bonus to 250. 
 1.0.1 - Added Mod information to ReadMe file.
