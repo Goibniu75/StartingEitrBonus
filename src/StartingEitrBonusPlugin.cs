@@ -9,7 +9,7 @@ public sealed class StartingEitrBonusPlugin : BaseUnityPlugin
 {
     public const string PluginGuid = "badbatch.valheim.startingeitrbonus";
     public const string PluginName = "Starting Eitr Bonus";
-    public const string PluginVersion = "1.0.4";
+    public const string PluginVersion = "1.0.2";
 
     internal static ConfigEntry<bool> ModEnabled = null!;
     internal static ConfigEntry<float> BaseEitrBonus = null!;
