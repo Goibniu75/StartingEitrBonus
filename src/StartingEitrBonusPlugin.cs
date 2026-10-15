@@ -9,7 +9,7 @@ public sealed class StartingEitrBonusPlugin : BaseUnityPlugin
 {
     public const string PluginGuid = "badbatch.valheim.startingeitrbonus";
     public const string PluginName = "Starting Eitr Bonus";
-    public const string PluginVersion = "1.0.2";
+    public const string PluginVersion = "1.0.4";
 
     internal static ConfigEntry<bool> ModEnabled = null!;
     internal static ConfigEntry<float> BaseEitrBonus = null!;
@@ -43,20 +43,51 @@ public sealed class StartingEitrBonusPlugin : BaseUnityPlugin
 
     private void PatchTotalFoodValue()
     {
-        var targetMethod =
-            AccessTools.Method(typeof(Player), "GetTotalFoodValue")
-            ?? AccessTools.Method(typeof(Player), "getTotalFoodValue");
+        // Try known legacy and newer method names first, then fall back to reflection-based discovery.
+        string[] candidateNames = new[]
+        {
+            "GetTotalFoodValue",
+            "getTotalFoodValue",
+            "GetTotalEitr",
+            "GetTotalEitrValue",
+            "GetTotalFoodEitr",
+            "GetEitrFromFood",
+            "GetTotalEitrFromFood",
+        };
+
+        System.Reflection.MethodInfo? targetMethod = null;
+        foreach (var name in candidateNames)
+        {
+            targetMethod = AccessTools.Method(typeof(Player), name);
+            if (targetMethod != null)
+                break;
+        }
+
+        // Fallback: find a parameterless instance method returning float whose name contains 'Total' and ('Food' or 'Eitr')
+        if (targetMethod == null)
+        {
+            var methods = typeof(Player).GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+            foreach (var m in methods)
+            {
+                if (m.ReturnType == typeof(float) && m.GetParameters().Length == 0)
+                {
+                    var n = m.Name.ToLowerInvariant();
+                    if (n.Contains("total") && (n.Contains("food") || n.Contains("eitr")))
+                    {
+                        targetMethod = m;
+                        break;
+                    }
+                }
+            }
+        }
 
         if (targetMethod == null)
         {
-            Logger.LogWarning("Could not find Player.GetTotalFoodValue. The Eitr bonus patch was not applied.");
+            Logger.LogWarning("Could not find Player total Eitr/food value method. The Eitr bonus patch was not applied.");
             return;
         }
 
-        var postfix = new HarmonyMethod(
-            typeof(PlayerGetTotalFoodValuePatch),
-            nameof(PlayerGetTotalFoodValuePatch.Postfix));
-
+        var postfix = new HarmonyMethod(typeof(PlayerGetTotalFoodValuePatch), nameof(PlayerGetTotalFoodValuePatch.Postfix));
         _harmony.Patch(targetMethod, postfix: postfix);
     }
 }

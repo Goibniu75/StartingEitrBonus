@@ -1,6 +1,6 @@
 {
   "name": "StartingEitrBonus",
-  "version_number": "1.0.2",
+  "version_number": "1.0.4",
   "website_url": "",
   "description": "Adds a configurable base Eitr bonus so players can start with Eitr before eating magic food.",
   "dependencies": [
